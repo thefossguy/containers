@@ -1,0 +1,55 @@
+version: '3.3'
+
+services:
+    db:
+        image: mariadb
+        container_name: nextcloud-lekh
+        restart: always
+        command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+        volumes:
+            - /trayimurti/containers/volumes/nextcloud/db:/var/lib/mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=/run/secrets/sql_root_passwd
+            - MYSQL_PASSWORD=/run/secrets/sql_user_passwd
+            - MYSQL_DATABASE=nextcloud
+            - MYSQL_USER=nextcloud
+            - TZ=Asia/Kolkata
+        secrets:
+            - sql_root_passwd
+            - sql_user_passwd
+        security_opt:
+            - label=disable
+
+    app:
+        image: nextcloud
+        container_name: nextcloud-aarav
+        restart: always
+        ports:
+            - 8080:80
+        links:
+            - db
+        volumes:
+            - /trayimurti/containers/volumes/nextcloud/root:/var/www/html
+        environment:
+            - MYSQL_PASSWORD=/run/secrets/sql_user_passwd
+            - MYSQL_DATABASE=nextcloud
+            - MYSQL_USER=nextcloud
+            - MYSQL_HOST=db
+            - TZ=Asia/Kolkata
+        secrets:
+            - sql_user_passwd
+        security_opt:
+            - label=disable
+
+secrets:
+    sql_root_passwd:
+        external: true
+    sql_user_passwd:
+        external: true
+
+# create dirs
+# mkdir -p /trayimurti/containers/volumes/nextcloud/{db,root}
+
+# create secrets
+# openssl rand -base64 20 | podman secret create sql_root_passwd -
+# openssl rand -base64 20 | podman secret create sql_user_passwd -

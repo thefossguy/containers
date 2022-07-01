@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+    pihole:
+        container_name: pihole-chaitanya
+        image: pihole/pihole:latest
+        ports:
+            - 100:53/tcp
+            - 101:53/udp
+            - 8005:80/tcp
+        environment:
+            TZ: Asia/Kolkata
+        volumes:
+            - /trayimurti/containers/volumes/pi-hole/etc-pihole:/etc/pihole
+            - /trayimurti/containers/volumes/pi-hole/etc-dnsmasq.d:/etc/dnsmasq.d
+        cap_add:
+            - NET_ADMIN
+        restart: unless-stopped
+
+# create dirs
+# mkdir -p /trayimurti/containers/volumes/pi-hole/{etc-pihole,etc-dnsmasq}

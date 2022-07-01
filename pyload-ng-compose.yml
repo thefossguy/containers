@@ -1,0 +1,22 @@
+version: "2.1"
+
+services:
+    pyload-ng:
+        image: lscr.io/linuxserver/pyload-ng
+        container_name: pyload-ng-omkar
+        environment:
+            - PUID=1000
+            - PGID=1000
+            - TZ=Asia/Kolkata
+        volumes:
+            - /trayimurti/containers/volumes/payload-ng/config:/config
+            - /trayimurti/containers/volumes/payload-ng/downloads:/downloads
+        ports:
+            - 8003:8000
+            - 9666:9666
+        restart: unless-stopped
+
+        # default uname:passwd => pyload:pyload
+
+# create dirs
+# mkdir -p /trayimurti/containers/volumes/payload-ng/{config,downloads}

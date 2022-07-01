@@ -1,0 +1,24 @@
+version: "2.1"
+
+services:
+    transmission:
+        image: lscr.io/linuxserver/transmission
+        container_name: transmission_yash
+        environment:
+            - PUID=1000
+            - PGID=1000
+            - TZ=Asia/Kolkata
+            - TRANSMISSION_WEB_HOME=/transmission-web-control/
+#            - TRANSMISSION_WEB_HOME=/flood-for-transmission/
+        volumes:
+            - /trayimurti/torrents/config:/config
+            - /trayimurti/torrents/downloads:/downloads
+            - /trayimurti/torrents/watch:/watch
+        ports:
+            - 8001:9091
+            - 51411:51413
+            - 51412:51413/udp
+        restart: unless-stopped
+
+# create dirs
+# mkdir -p /trayimurti/torrents/{config,downloads,watch}
