@@ -9,14 +9,13 @@ services:
             - PGID=1000
             - TZ=Asia/Kolkata
         volumes:
-            - /trayimurti/containers/volumes/payload-ng/config:/config
-            - /trayimurti/containers/volumes/payload-ng/downloads:/downloads
+            - /trayimurti/containers/volumes/pyload-ng/config:/config
+            - /trayimurti/containers/volumes/pyload-ng/downloads:/downloads
         ports:
-            - 8003:8000
-            - 9666:9666
+            - 8081:8000
         restart: unless-stopped
 
         # default uname:passwd => pyload:pyload
 
 # create dirs
-# mkdir -p /trayimurti/containers/volumes/payload-ng/{config,downloads}
+# mkdir -vp /trayimurti/containers/volumes/pyload-ng/{config,downloads}

@@ -48,7 +48,7 @@ secrets:
         external: true
 
 # create dirs
-# mkdir -p /trayimurti/containers/volumes/nextcloud/{db,root}
+# mkdir -vp /trayimurti/containers/volumes/nextcloud/{db,root}
 
 # create secrets
 # openssl rand -base64 20 | podman secret create sql_root_passwd -
