@@ -6,8 +6,6 @@ services:
         container_name: syncthing-vishwakarma
         hostname: untrusted_sentinel
         environment:
-            - PUID=1000
-            - PGID=1000
             - TZ=Asia/Kolkata
         volumes:
             - /trayimurti/containers/volumes/syncthing/config:/config

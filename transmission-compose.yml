@@ -5,8 +5,6 @@ services:
         image: lscr.io/linuxserver/transmission
         container_name: transmission_yash
         environment:
-            - PUID=1000
-            - PGID=1000
             - TZ=Asia/Kolkata
             - TRANSMISSION_WEB_HOME=/transmission-web-control/
 #            - TRANSMISSION_WEB_HOME=/flood-for-transmission/

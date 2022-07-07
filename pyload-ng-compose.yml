@@ -5,8 +5,6 @@ services:
         image: lscr.io/linuxserver/pyload-ng
         container_name: pyload-ng-omkar
         environment:
-            - PUID=1000
-            - PGID=1000
             - TZ=Asia/Kolkata
         volumes:
             - /trayimurti/containers/volumes/pyload-ng/config:/config
