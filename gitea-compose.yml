@@ -19,7 +19,7 @@ services:
             - GITEA__database__HOST=db:5432
             - GITEA__database__NAME=gitea
             - GITEA__database__USER=gitea
-            - GITEA__database__PASSWD=/run/secrets/postgres_user_passwd
+            - GITEA__database__PASSWD=/run/secrets/gitea_db_user_passwd
 #            - GITEA__database__PASSWD=gitea
             - TZ=Asia/Kolkata
         security_opt:
@@ -27,7 +27,7 @@ services:
         depends_on:
             - db
         secrets:
-            - postgres_user_passwd
+            - gitea_db_user_passwd
 
     db:
         image: postgres:alpine
@@ -37,21 +37,21 @@ services:
             - /trayimurti/containers/volumes/gitea/db:/var/lib/postgresql/data
         environment:
             - POSTGRES_USER=gitea
-            - POSTGRES_PASSWORD=/run/secrets/postgres_user_passwd
+            - POSTGRES_PASSWORD=/run/secrets/gitea_db_user_passwd
 #            - POSTGRES_PASSWORD=gitea
             - POSTGRES_DB=gitea
             - TZ=Asia/Kolkata
         secrets:
-            - postgres_user_passwd
+            - gitea_db_user_passwd
         security_opt:
             - label=disable
 
 secrets:
-    postgres_user_passwd:
+    gitea_db_user_passwd:
         external: true
 
 # create dirs
 # mkdir -vp /trayimurti/containers/volumes/gitea/{db,root/{data,config}}
 
 # create secrets
-# openssl rand -base64 20 | podman secret create postgres_user_passwd -
+# openssl rand -base64 20 | podman secret create gitea_db_user_passwd -
