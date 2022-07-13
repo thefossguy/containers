@@ -15,7 +15,7 @@ services:
         security_opt:
             - label=disable
 
-        # default uname:passwd => pyload:pyload
+# default uname:passwd => pyload:pyload
 
 # create dirs
 # mkdir -vp /trayimurti/containers/volumes/pyload-ng/{config,downloads}
