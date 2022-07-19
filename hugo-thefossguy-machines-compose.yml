@@ -1,0 +1,16 @@
+version: 3
+
+services:
+    server:
+        image: klakegg/hugo:alpine
+        container_name: hugo-thefossguy-machines
+        restart: always
+        command: server
+        ports:
+            - 8082:1313
+        volumes:
+            - /trayimurti/containers/volumes/hugo/thefossguy-machines:/src
+        environment:
+            - TZ=Asia/Kolkata
+        security_opt:
+            - label=disable
