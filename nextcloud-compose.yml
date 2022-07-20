@@ -26,7 +26,7 @@ services:
         restart: always
         ports:
             - 8080:80
-        links:
+        depends_on:
             - db
         volumes:
             - /trayimurti/containers/volumes/nextcloud/root:/var/www/html
