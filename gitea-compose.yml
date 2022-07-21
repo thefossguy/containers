@@ -3,11 +3,11 @@ version: 3
 services:
     app:
         image: gitea/gitea:latest
-        container_name: gitea-aatman
+        container_name: gitea-govinda
         restart: always
         ports:
-            - 8010:3000
-            - 8011:2222
+            - 8020:3000
+            - 8021:2222
         volumes:
             - /trayimurti/containers/volumes/gitea/root/data:/var/lib/gitea:Z
             - /trayimurti/containers/volumes/gitea/root/config:/etc/gitea:Z
@@ -27,7 +27,7 @@ services:
 
     db:
         image: postgres:alpine
-        container_name: gitea-dhyana
+        container_name: gitea-chitragupta
         restart: always
         volumes:
             - /trayimurti/containers/volumes/gitea/db:/var/lib/postgresql/data:Z
@@ -48,7 +48,3 @@ secrets:
 
 # create secrets
 # openssl rand -base64 20 | podman secret create gitea_database_user_password -
-
-# open ports
-# sudo firewall-cmd --add-port=8010/tcp --add-port=8011/tcp --permanent
-# sudo firewall-cmd --reload
