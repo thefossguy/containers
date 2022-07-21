@@ -3,7 +3,7 @@ version: 3.3
 services:
     db:
         image: mariadb
-        container_name: nextcloud-lekh
+        container_name: nextcloud-chitragupta
         restart: always
         command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
         volumes:
@@ -20,7 +20,7 @@ services:
 
     app:
         image: nextcloud
-        container_name: nextcloud-aarav
+        container_name: nextcloud-govinda
         restart: always
         ports:
             - 8010:80
@@ -33,6 +33,7 @@ services:
             - MYSQL_DATABASE=nextcloud
             - MYSQL_USER=nextcloud
             - MYSQL_HOST=db
+            - NEXTCLOUD_TRUSTED_DOMAINS=cloud.thefossguy.com bluefeds.lan 10.0.0.19
             - TZ=Asia/Kolkata
         secrets:
             - nextcloud_database_user_password
