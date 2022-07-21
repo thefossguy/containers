@@ -7,9 +7,9 @@ services:
         restart: always
         command: server
         ports:
-            - 8081:1313
+            - 8030:1313
         volumes:
-            - /trayimurti/containers/volumes/hugo/thefossguy-blog:/src
+            - /trayimurti/containers/volumes/hugo/thefossguy-blog:/src:Z
         environment:
             - TZ=Asia/Kolkata
         security_opt:
