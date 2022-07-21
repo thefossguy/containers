@@ -3,14 +3,18 @@ version: 3
 services:
     server:
         image: klakegg/hugo:alpine
-        container_name: hugo-thefossguy-blog
+        container_name: hugo-thefossguy-blog-vaikunthnatham
         restart: always
         command: server
         ports:
             - 8030:1313
         volumes:
-            - /trayimurti/containers/volumes/hugo/thefossguy-blog:/src:Z
+            - /trayimurti/containers/volumes/thefossguy-blog:/src:Z
         environment:
             - TZ=Asia/Kolkata
         security_opt:
             - label=disable
+
+# this image is not official, but is endorsed in a somewhat official capacity
+# https://discourse.gohugo.io/t/klakeggs-wonderful-hugo-docker-image-update-thread/20347
+# https://gohugo.io/getting-started/installing/#docker
