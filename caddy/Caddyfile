@@ -1,0 +1,14 @@
+thefossguy.com {
+	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
+	reverse_proxy nextcloud-aarav:80
+}
+
+www.thefossguy.com {
+	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
+	reverse_proxy nextcloud-aarav:80
+}
+
+git.thefossguy.com {
+	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
+	reverse_proxy gitea-aatman:3000
+}
