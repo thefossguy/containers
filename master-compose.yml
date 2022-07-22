@@ -1,10 +1,30 @@
-version: 3.3
+version: 3.7
 
 services:
 
-    gitea-app:
+    reverse-proxy:
+        image: caddy:2-alpine
+        container_name: caddy-vishwakarma
+        command: caddy run --config /etc/caddy/Caddyfile
+        restart: always
+        ports:
+            - 8080:80
+            - 8443:443
+        volumes:
+            - /trayimurti/containers/volumes/caddy/Caddyfile:/etc/caddy/Caddyfile:Z
+            - /trayimurti/containers/volumes/caddy/site:/srv:Z
+            - /trayimurti/containers/volumes/caddy/caddy_data:/data:Z
+            - /trayimurti/containers/volumes/caddy/caddy_config:/config:Z
+            - /trayimurti/containers/volumes/caddy/ssl:/etc/ssl:Z
+        depends_on:
+            - gitea-web
+            - nextcloud-web
+            - thefossguy-blog
+            - thefossguy-mach
+
+    gitea-web:
         image: gitea/gitea:latest
-        container_name: gitea-chitragupta
+        container_name: gitea-govinda
         restart: always
         ports:
             - 8010:3000
@@ -28,7 +48,7 @@ services:
 
     gitea-db:
         image: postgres:alpine
-        container_name: gitea-govinda
+        container_name: gitea-chitragupta
         restart: always
         volumes:
             - /trayimurti/containers/volumes/gitea/db:/var/lib/postgresql/data:Z
@@ -40,18 +60,67 @@ services:
         secrets:
             - gitea_database_user_password
 
+    thefossguy-blog:
+        image: klakegg/hugo:alpine
+        container_name: hugo-vaikunthnatham
+        restart: always
+        command: server
+        ports:
+            - 8020:1313
+        volumes:
+            - /trayimurti/containers/volumes/thefossguy-blog:/src:Z
+        environment:
+            - TZ=Asia/Kolkata
 
-secrets:
-    gitea_database_user_password:
-        external: true
+    nextcloud-web:
+        image: nextcloud
+        container_name: nextcloud-govinda
+        restart: always
+        ports:
+            - 8010:80
+        volumes:
+            - /trayimurti/containers/volumes/nextcloud/root:/var/www/html:Z
+        environment:
+            - MYSQL_PASSWORD=/run/secrets/nextcloud_database_user_password
+            - MYSQL_DATABASE=nextcloud
+            - MYSQL_USER=nextcloud
+            - MYSQL_HOST=db
+            - NEXTCLOUD_TRUSTED_DOMAINS=cloud.thefossguy.com bluefeds.lan 10.0.0.19
+            - TZ=Asia/Kolkata
+        depends_on:
+            - nextcloud-db
+        secrets:
+            - nextcloud_database_user_password
 
+    nextcloud-db:
+        image: mariadb
+        container_name: nextcloud-chitragupta
+        restart: always
+        command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+        volumes:
+            - /trayimurti/containers/volumes/nextcloud/db:/var/lib/mysql:Z
+        environment:
+            - MYSQL_ROOT_PASSWORD=/run/secrets/nextcloud_database_root_password
+            - MYSQL_PASSWORD=/run/secrets/nextcloud_database_user_password
+            - MYSQL_DATABASE=nextcloud
+            - MYSQL_USER=nextcloud
+            - TZ=Asia/Kolkata
+        secrets:
+            - nextcloud_database_root_password
+            - nextcloud_database_user_password
 
-# create dirs
-# mkdir -vp /trayimurti/containers/volumes/gitea/{db,root/{data,config}}
+    thefossguy-mach:
+        image: klakegg/hugo:alpine
+        container_name: hugo-mahayogi
+        restart: always
+        command: server
+        ports:
+            - 8040:1313
+        volumes:
+            - /trayimurti/containers/volumes/thefossguy-machines:/src:Z
+        environment:
+            - TZ=Asia/Kolkata
 
-# create secrets
-# openssl rand -base64 20 | podman secret create gitea_database_user_password -
-
-# open ports
-# sudo firewall-cmd --add-port=8010/tcp --add-port=8011/tcp --permanent
+# sudo firewall-cmd --permanent --add-port=8080/tcp --add-port=8443/tcp --add-port= --add-port= --add-port= --add-port= --add-port= --add-port= --add-port= --add-port= 
 # sudo firewall-cmd --reload
+# sudo firewall-cmd --list-ports
