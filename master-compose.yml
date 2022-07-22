@@ -36,7 +36,7 @@ services:
         environment:
             - ROOT_URL=https://git.thefossguy.com
             - GITEA__database__DB_TYPE=postgres
-            - GITEA__database__HOST=db:5432
+            - GITEA__database__HOST=gitea-db:5432
             - GITEA__database__NAME=gitea
             - GITEA__database__USER=gitea
             - GITEA__database__PASSWD=/run/secrets/gitea_database_user_password
@@ -64,7 +64,7 @@ services:
         image: klakegg/hugo:alpine
         container_name: hugo-vaikunthnatham
         restart: always
-        command: server
+        command: server --disableFastRender -b https://blog.thefossguy.com/ --appendPort=false
         ports:
             - 8020:1313
         volumes:
@@ -84,8 +84,8 @@ services:
             - MYSQL_PASSWORD=/run/secrets/nextcloud_database_user_password
             - MYSQL_DATABASE=nextcloud
             - MYSQL_USER=nextcloud
-            - MYSQL_HOST=db
-            - NEXTCLOUD_TRUSTED_DOMAINS=cloud.thefossguy.com bluefeds.lan 10.0.0.19
+            - MYSQL_HOST=nextcloud-db
+            - NEXTCLOUD_TRUSTED_DOMAINS=cloud.thefossguy.com
             - TZ=Asia/Kolkata
         depends_on:
             - nextcloud-db
@@ -113,7 +113,7 @@ services:
         image: klakegg/hugo:alpine
         container_name: hugo-mahayogi
         restart: always
-        command: server
+        command: server --disableFastRender -b https://mach.thefossguy.com/ --appendPort=false
         ports:
             - 8040:1313
         volumes:
@@ -121,16 +121,41 @@ services:
         environment:
             - TZ=Asia/Kolkata
 
+secrets:
+    gitea_database_user_password:
+        external: true
+    nextcloud_database_user_password:
+        external: true
+    nextcloud_database_root_password:
+        external: true
+
+
 # sudo firewall-cmd --permanent --add-port=8080/tcp --add-port=8443/tcp --add-port=8010/tcp --add-port=8011/tcp --add-port=8020/tcp --add-port=8030/tcp --add-port=8040/tcp
 # sudo firewall-cmd --reload
 # sudo firewall-cmd --list-ports
 
-# zfs create trayimurti/containers/volumes/caddy
-# zfs create trayimurti/containers/volumes/gitea
-# zfs create trayimurti/containers/volumes/blog
-# zfs create trayimurti/containers/volumes/nextcloud
-# zfs create trayimurti/containers/volumes/mach
+# sudo zfs create trayimurti/containers/volumes/caddy
+# sudo zfs create trayimurti/containers/volumes/gitea
+# sudo zfs create trayimurti/containers/volumes/blog
+# sudo zfs create trayimurti/containers/volumes/nextcloud
+# sudo zfs create trayimurti/containers/volumes/mach
 
-# mkdir -vp /trayimurti/containers/volumes/caddy/{site,ssl,caddy_{data,config}}
+# sudo chown pratham:pratham -vR /trayimurti/containers/volumes
+
+# mkdir -vp /trayimurti/containers/volumes/caddy/{site,ssl/{private,certs},caddy_{data,config}}
 # mkdir -vp /trayimurti/containers/volumes/gitea/{database,web/{data,config}}
 # mkdir -vp /trayimurti/containers/volumes/nextcloud/{database,web}
+
+# cp -v Caddyfile /trayimurti/containers/volumes/caddy/
+# chmod 700 -v /trayimurti/containers/volumes/caddy/ssl/private
+# chmod 600 -v /trayimurti/containers/volumes/caddy/ssl/private/key.pem
+
+# git clone git@gitlab.com:shivohamx3/blog.git /trayimurti/containers/volumes/blog
+# git clone git@gitlab.com:shivohamx3/machines.git /trayimurti/containers/volumes/mach
+# mkdir -vp /trayimurti/containers/volumes/{mach,blog}/content
+
+# podman pull docker.io/library/caddy:2-alpine docker.io/gitea/gitea:latest docker.io/library/postgres:alpine docker.io/klakegg/hugo:alpine docker.io/library/nextcloud docker.io/library/mariadb
+
+# openssl rand -base64 20 | podman secret create gitea_database_user_password -
+# openssl rand -base64 20 | podman secret create nextcloud_database_user_password -
+# openssl rand -base64 20 | podman secret create nextcloud_database_root_password -
