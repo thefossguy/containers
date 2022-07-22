@@ -18,8 +18,8 @@ services:
             - /trayimurti/containers/volumes/caddy/ssl:/etc/ssl:Z
         depends_on:
             - gitea-web
-            - nextcloud-web
             - thefossguy-blog
+            - nextcloud-web
             - thefossguy-mach
 
     gitea-web:
@@ -30,8 +30,8 @@ services:
             - 8010:3000
             - 8011:2222
         volumes:
-            - /trayimurti/containers/volumes/gitea/root/data:/var/lib/gitea:Z
-            - /trayimurti/containers/volumes/gitea/root/config:/etc/gitea:Z
+            - /trayimurti/containers/volumes/gitea/web/data:/var/lib/gitea:Z
+            - /trayimurti/containers/volumes/gitea/web/config:/etc/gitea:Z
             - /etc/localtime:/etc/localtime:ro
         environment:
             - ROOT_URL=https://git.thefossguy.com
@@ -51,7 +51,7 @@ services:
         container_name: gitea-chitragupta
         restart: always
         volumes:
-            - /trayimurti/containers/volumes/gitea/db:/var/lib/postgresql/data:Z
+            - /trayimurti/containers/volumes/gitea/database:/var/lib/postgresql/data:Z
         environment:
             - POSTGRES_USER=gitea
             - POSTGRES_PASSWORD=/run/secrets/gitea_database_user_password
@@ -68,7 +68,7 @@ services:
         ports:
             - 8020:1313
         volumes:
-            - /trayimurti/containers/volumes/thefossguy-blog:/src:Z
+            - /trayimurti/containers/volumes/blog:/src:Z
         environment:
             - TZ=Asia/Kolkata
 
@@ -79,7 +79,7 @@ services:
         ports:
             - 8030:80
         volumes:
-            - /trayimurti/containers/volumes/nextcloud/root:/var/www/html:Z
+            - /trayimurti/containers/volumes/nextcloud/web:/var/www/html:Z
         environment:
             - MYSQL_PASSWORD=/run/secrets/nextcloud_database_user_password
             - MYSQL_DATABASE=nextcloud
@@ -98,7 +98,7 @@ services:
         restart: always
         command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
         volumes:
-            - /trayimurti/containers/volumes/nextcloud/db:/var/lib/mysql:Z
+            - /trayimurti/containers/volumes/nextcloud/database:/var/lib/mysql:Z
         environment:
             - MYSQL_ROOT_PASSWORD=/run/secrets/nextcloud_database_root_password
             - MYSQL_PASSWORD=/run/secrets/nextcloud_database_user_password
@@ -117,10 +117,20 @@ services:
         ports:
             - 8040:1313
         volumes:
-            - /trayimurti/containers/volumes/thefossguy-machines:/src:Z
+            - /trayimurti/containers/volumes/mach:/src:Z
         environment:
             - TZ=Asia/Kolkata
 
-# sudo firewall-cmd --permanent --add-port=8080/tcp --add-port=8443/tcp --add-port= --add-port= --add-port= --add-port= --add-port= --add-port= --add-port= --add-port= 
+# sudo firewall-cmd --permanent --add-port=8080/tcp --add-port=8443/tcp --add-port=8010/tcp --add-port=8011/tcp --add-port=8020/tcp --add-port=8030/tcp --add-port=8040/tcp
 # sudo firewall-cmd --reload
 # sudo firewall-cmd --list-ports
+
+# zfs create trayimurti/containers/volumes/caddy
+# zfs create trayimurti/containers/volumes/gitea
+# zfs create trayimurti/containers/volumes/blog
+# zfs create trayimurti/containers/volumes/nextcloud
+# zfs create trayimurti/containers/volumes/mach
+
+# mkdir -vp /trayimurti/containers/volumes/caddy/{site,ssl,caddy_{data,config}}
+# mkdir -vp /trayimurti/containers/volumes/gitea/{database,web/{data,config}}
+# mkdir -vp /trayimurti/containers/volumes/nextcloud/{database,web}
