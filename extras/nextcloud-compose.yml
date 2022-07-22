@@ -33,7 +33,7 @@ services:
             - MYSQL_DATABASE=nextcloud
             - MYSQL_USER=nextcloud
             - MYSQL_HOST=db
-            - NEXTCLOUD_TRUSTED_DOMAINS=cloud.thefossguy.com bluefeds.lan 10.0.0.19
+#            - NEXTCLOUD_TRUSTED_DOMAINS=cloud.thefossguy.com bluefeds.lan 10.0.0.19
             - TZ=Asia/Kolkata
         secrets:
             - nextcloud_database_user_password

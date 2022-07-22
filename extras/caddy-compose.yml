@@ -17,4 +17,6 @@ services:
             - /trayimurti/containers/volumes/caddy/caddy_config:/config:Z
             - /trayimurti/containers/volumes/caddy/ssl:/etc/ssl:Z
 
-# mkdir -vp /trayimurti/containers/volumes/caddy/{site,ssl,caddy_{data,config}}
+# mkdir -vp /trayimurti/containers/volumes/caddy/{site,ssl/{certs,private},caddy_{data,config}}
+# chmod 700 -v /trayimurti/containers/volumes/caddy/ssl/private
+# chmod 600 -v /trayimurti/containers/volumes/caddy/ssl/private/key.pem
