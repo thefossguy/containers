@@ -77,7 +77,7 @@ services:
         container_name: nextcloud-govinda
         restart: always
         ports:
-            - 8010:80
+            - 8030:80
         volumes:
             - /trayimurti/containers/volumes/nextcloud/root:/var/www/html:Z
         environment:
