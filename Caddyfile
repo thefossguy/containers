@@ -1,0 +1,50 @@
+blog.thefossguy.com {
+	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
+	reverse_proxy hugo-vaikunthnatham:1313
+}
+
+thefossguy.com {
+	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
+	redir https://blog.thefossguy.com{uri}
+}
+
+www.thefossguy.com {
+	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
+	redir https://blog.thefossguy.com{uri}
+}
+
+
+
+git.thefossguy.com {
+	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
+	reverse_proxy gitea-govinda:3000
+}
+
+src.thefossguy.com {
+	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
+	redir https://git.thefossguy.com{uri}
+}
+
+
+
+mach.thefossguy.com {
+	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
+	reverse_proxy hugo-mahayogi:1313
+}
+
+fuck.thefossguy.com {
+	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
+	redir https://mach.thefossguy.com{uri}
+}
+
+
+
+cloud.thefossguy.com {
+	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
+	reverse_proxy nextcloud-govinda:80
+}
+
+storage.thefossguy.com {
+	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
+	redir https://cloud.thefossguy.com{uri}
+}
