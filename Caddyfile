@@ -41,6 +41,10 @@ fuck.thefossguy.com {
 
 cloud.thefossguy.com {
 	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
+
+	rewrite /.well-known/carddav /remote.php/dav
+	rewrite /.well-known/caldav /remote.php/dav
+
 	reverse_proxy nextcloud-govinda:80
 }
 
