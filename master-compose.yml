@@ -73,7 +73,7 @@ services:
             - TZ=Asia/Kolkata
 
     nextcloud-web:
-        image: nextcloud
+        image: nextcloud:production
         container_name: nextcloud-govinda
         restart: always
         ports:
@@ -93,7 +93,7 @@ services:
             - nextcloud_database_user_password
 
     nextcloud-db:
-        image: mariadb
+        image: mariadb:latest
         container_name: nextcloud-chitragupta
         restart: always
         command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
