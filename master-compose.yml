@@ -4,7 +4,7 @@ services:
 
     reverse-proxy:
         image: caddy:2-alpine
-        container_name: caddy-vishwakarma
+        container_name: caddy-vishwambhar
         command: caddy run --config /etc/caddy/Caddyfile
         restart: always
         ports:
