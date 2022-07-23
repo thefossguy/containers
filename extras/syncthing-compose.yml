@@ -8,16 +8,14 @@ services:
         environment:
             - TZ=Asia/Kolkata
         volumes:
-            - /trayimurti/containers/volumes/syncthing/config:/config
-            - /trayimurti/containers/volumes/syncthing/data:/data
+            - /trayimurti/containers/volumes/syncthing/config:/config:Z
+            - /trayimurti/containers/volumes/syncthing/data:/data:Z
         ports:
             - 8001:8384
             - 22000:22000/tcp
             - 22000:22000/udp
             - 21027:21027/udp
         restart: unless-stopped
-        security_opt:
-            - label=disable
 
 # create dirs
 # mkdir -p /trayimurti/containers/volumes/syncthing/{config,data}

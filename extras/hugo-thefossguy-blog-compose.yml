@@ -9,11 +9,9 @@ services:
         ports:
             - 8030:1313
         volumes:
-            - /trayimurti/containers/volumes/thefossguy-blog:/src:Z
+            - /trayimurti/containers/volumes/blog:/src:Z
         environment:
             - TZ=Asia/Kolkata
-        security_opt:
-            - label=disable
 
 # this image is not official, but is endorsed in a somewhat official capacity
 # https://discourse.gohugo.io/t/klakeggs-wonderful-hugo-docker-image-update-thread/20347

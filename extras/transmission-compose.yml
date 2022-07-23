@@ -9,9 +9,9 @@ services:
             - TRANSMISSION_WEB_HOME=/transmission-web-control/
 #            - TRANSMISSION_WEB_HOME=/flood-for-transmission/
         volumes:
-            - /trayimurti/torrents/config:/config
-            - /trayimurti/torrents/downloads:/downloads
-            - /trayimurti/torrents/watch:/watch
+            - /trayimurti/torrents/config:/config:Z
+            - /trayimurti/torrents/downloads:/downloads:Z
+            - /trayimurti/torrents/watch:/watch:Z
         ports:
             - 8001:9091
             - 51411:51413

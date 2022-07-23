@@ -11,13 +11,11 @@ services:
         environment:
             - TZ: Asia/Kolkata
         volumes:
-            - /trayimurti/containers/volumes/pi-hole/etc-pihole:/etc/pihole
-            - /trayimurti/containers/volumes/pi-hole/etc-dnsmasq.d:/etc/dnsmasq.d
+            - /trayimurti/containers/volumes/pi-hole/etc-pihole:/etc/pihole:Z
+            - /trayimurti/containers/volumes/pi-hole/etc-dnsmasq.d:/etc/dnsmasq.d:Z
         cap_add:
             - NET_ADMIN
         restart: unless-stopped
-        security_opt:
-            - label=disable
 
 # create dirs
 # mkdir -vp /trayimurti/containers/volumes/pi-hole/{etc-pihole,etc-dnsmasq}

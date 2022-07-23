@@ -7,13 +7,11 @@ services:
         environment:
             - TZ=Asia/Kolkata
         volumes:
-            - /trayimurti/containers/volumes/pyload-ng/config:/config
-            - /trayimurti/containers/volumes/pyload-ng/downloads:/downloads
+            - /trayimurti/containers/volumes/pyload-ng/config:/config:Z
+            - /trayimurti/containers/volumes/pyload-ng/downloads:/downloads:Z
         ports:
             - 8081:8000
         restart: unless-stopped
-        security_opt:
-            - label=disable
 
 # default uname:passwd => pyload:pyload
 
