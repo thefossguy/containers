@@ -52,3 +52,17 @@ storage.thefossguy.com {
 	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
 	redir https://cloud.thefossguy.com{uri}
 }
+
+
+admin.thefossguy.com {
+	reverse_proxy https://10.0.0.19:9090 {
+		transport http {
+			tls_insecure_skip_verify
+		}
+	}
+}
+
+cockpit.thefossguy.com {
+	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
+	redir https://admin.thefossguy.com{uri}
+}
