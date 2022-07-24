@@ -3,7 +3,7 @@ version: 3.7
 services:
 
     reverse-proxy:
-        image: caddy:2-alpine
+        image: caddy:alpine
         container_name: caddy-vishwambhar
         command: caddy run --config /etc/caddy/Caddyfile
         restart: always
