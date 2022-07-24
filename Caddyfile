@@ -66,3 +66,14 @@ cockpit.thefossguy.com {
 	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
 	redir https://admin.thefossguy.com{uri}
 }
+
+
+torr.thefossguy.com {
+	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
+	reverse_proxy 10.0.0.14:9091
+}
+
+torrs.thefossguy.com {
+	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
+	redir https://torr.thefossguy.com{uri}
+}
