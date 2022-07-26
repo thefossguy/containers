@@ -110,7 +110,7 @@ services:
 
     nextcloud-cron:
         image: nextcloud:production
-        container_name: nextcloud-indra
+        container_name: nextcloud-kama
         restart: always
         entrypoint: /cron.sh
         volumes:
