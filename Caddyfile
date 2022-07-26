@@ -70,10 +70,18 @@ cockpit.thefossguy.com {
 
 torr.thefossguy.com {
 	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
+
+	basicauth {
+		pratham 
+	}
 	reverse_proxy 10.0.0.14:9091
 }
 
 torrs.thefossguy.com {
 	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
+
+	basicauth {
+		pratham 
+	}
 	redir https://torr.thefossguy.com{uri}
 }
