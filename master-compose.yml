@@ -81,10 +81,10 @@ services:
         volumes:
             - /trayimurti/containers/volumes/nextcloud/web:/var/www/html:Z
         environment:
-            - MYSQL_PASSWORD=/run/secrets/nextcloud_database_user_password
-            - MYSQL_DATABASE=nextcloud
-            - MYSQL_USER=nextcloud
-            - MYSQL_HOST=nextcloud-db
+            - POSTGRES_PASSWORD=/run/secrets/nextcloud_database_user_password
+            - POSTGRES_DB=nextcloud
+            - POSTGRES_USER=nextcloud
+            - POSTGRES_HOST=nextcloud-db
             - NEXTCLOUD_TRUSTED_DOMAINS=cloud.thefossguy.com
             - OVERWRITECLIURL=https://cloud.thefossguy.com
             - OVERWRITEPROTOCOL=https
@@ -95,21 +95,31 @@ services:
             - nextcloud_database_user_password
 
     nextcloud-db:
-        image: mariadb:latest
+        image: postgres:alpine
         container_name: nextcloud-chitragupta
         restart: always
-        command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
         volumes:
-            - /trayimurti/containers/volumes/nextcloud/database:/var/lib/mysql:Z
+            - /trayimurti/containers/volumes/nextcloud/database:/var/lib/postgresql/data:Z
         environment:
-            - MYSQL_ROOT_PASSWORD=/run/secrets/nextcloud_database_root_password
-            - MYSQL_PASSWORD=/run/secrets/nextcloud_database_user_password
-            - MYSQL_DATABASE=nextcloud
-            - MYSQL_USER=nextcloud
+            - POSTGRES_DB=nextcloud
+            - POSTGRES_USER=nextcloud
+            - POSTGRES_PASSWORD=/run/secrets/nextcloud_database_user_password
             - TZ=Asia/Kolkata
         secrets:
-            - nextcloud_database_root_password
             - nextcloud_database_user_password
+
+    nextcloud-cron:
+        image: nextcloud:production
+        container_name: nextcloud-indra
+        restart: always
+        entrypoint: /cron.sh
+        volumes:
+            - /trayimurti/containers/volumes/nextcloud/web:/var/www/html:Z
+        environment:
+            - TZ=Asia/Kolkata
+        depends_on:
+            - nextcloud-web
+            - nextcloud-db
 
     thefossguy-mach:
         image: klakegg/hugo:alpine
@@ -127,8 +137,6 @@ secrets:
     gitea_database_user_password:
         external: true
     nextcloud_database_user_password:
-        external: true
-    nextcloud_database_root_password:
         external: true
 
 
@@ -156,8 +164,5 @@ secrets:
 # git clone git@gitlab.com:shivohamx3/machines.git /trayimurti/containers/volumes/mach
 # mkdir -vp /trayimurti/containers/volumes/{mach,blog}/content
 
-# podman pull docker.io/library/caddy:2-alpine && sleep 60 && podman pull docker.io/gitea/gitea:latest && sleep 60 && podman pull docker.io/klakegg/hugo:alpine && sleep 60 && podman pull docker.io/library/mariadb:latest && sleep 60 && podman pull docker.io/library/nextcloud:production && sleep 60 && podman pull docker.io/library/postgres:alpine && sleep 60
-
 # openssl rand -base64 20 | podman secret create gitea_database_user_password -
 # openssl rand -base64 20 | podman secret create nextcloud_database_user_password -
-# openssl rand -base64 20 | podman secret create nextcloud_database_root_password -
