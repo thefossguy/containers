@@ -8,8 +8,8 @@ services:
         command: caddy run --config /etc/caddy/Caddyfile
         restart: always
         ports:
-            - 8080:80
-            - 8443:443
+            - "8080:80"
+            - "8443:443"
         volumes:
             - /trayimurti/containers/volumes/caddy/Caddyfile:/etc/caddy/Caddyfile:Z
             - /trayimurti/containers/volumes/caddy/site:/srv:Z
@@ -27,8 +27,8 @@ services:
         container_name: gitea-govinda
         restart: always
         ports:
-            - 8010:3000
-            - 8011:2222
+            - "8010:3000"
+            - "8011:22"
         volumes:
             - /trayimurti/containers/volumes/gitea/web:/data:Z
 #            - /trayimurti/containers/volumes/gitea/web/data:/var/lib/gitea:Z
@@ -67,7 +67,7 @@ services:
         restart: always
         command: server --disableFastRender -b https://blog.thefossguy.com/ --appendPort=false
         ports:
-            - 8020:1313
+            - "8020:1313"
         volumes:
             - /trayimurti/containers/volumes/blog:/src:Z
         environment:
@@ -78,7 +78,7 @@ services:
         container_name: nextcloud-govinda
         restart: always
         ports:
-            - 8030:80
+            - "8030:80"
         volumes:
             - /trayimurti/containers/volumes/nextcloud/web:/var/www/html:z
         environment:
@@ -128,7 +128,7 @@ services:
         restart: always
         command: server --disableFastRender -b https://mach.thefossguy.com/ --appendPort=false
         ports:
-            - 8040:1313
+            - "8040:1313"
         volumes:
             - /trayimurti/containers/volumes/mach:/src:Z
         environment:
