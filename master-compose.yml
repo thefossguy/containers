@@ -27,15 +27,22 @@ services:
         container_name: gitea-govinda
         restart: always
         ports:
-            - "8010:3000"
-            - "8011:22"
+            - "127.0.0.1:8010:3000"
+            - "127.0.0.1:8011:22"
+#            - "8010:3000"
+#            - "8011:2222"
         volumes:
             - /trayimurti/containers/volumes/gitea/web:/data:Z
+            - /trayimurti/containers/volumes/gitea/ssh:/data/git/.ssh:Z
 #            - /trayimurti/containers/volumes/gitea/web/data:/var/lib/gitea:Z
 #            - /trayimurti/containers/volumes/gitea/web/config:/etc/gitea:Z
             - /etc/localtime:/etc/localtime:ro
         environment:
+            - SSH_PORT=22
+            - SSH_LISTEN_PORT=22
             - ROOT_URL=https://git.thefossguy.com
+            - DOMAIN=git.thefossguy.com
+            - SSH_DOMAIN=git.thefossguy.com
             - GITEA__database__DB_TYPE=postgres
             - GITEA__database__HOST=gitea-db:5432
             - GITEA__database__NAME=gitea
@@ -154,7 +161,7 @@ secrets:
 # sudo chown pratham:pratham -vR /trayimurti/containers/volumes
 
 # mkdir -vp /trayimurti/containers/volumes/caddy/{site,ssl/{private,certs},caddy_{data,config}}
-# mkdir -vp /trayimurti/containers/volumes/gitea/{database,web/{data,config}}
+# mkdir -vp /trayimurti/containers/volumes/gitea/{database,web,ssh}
 # mkdir -vp /trayimurti/containers/volumes/nextcloud/{database,web}
 
 # cp -v Caddyfile /trayimurti/containers/volumes/caddy/
