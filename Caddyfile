@@ -20,6 +20,11 @@ git.thefossguy.com {
 	reverse_proxy gitea-govinda:3000
 }
 
+git.thefossguy.com:22 {
+	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
+	reverse_proxy gitea-govinda:22
+}
+
 src.thefossguy.com {
 	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
 	redir https://git.thefossguy.com{uri}
@@ -54,6 +59,50 @@ storage.thefossguy.com {
 }
 
 
+
+notes.thefossguy.com {
+	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
+	redir https://cloud.thefossguy.com/apps/notes{uri}
+}
+
+keep.thefossguy.com {
+	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
+	redir https://cloud.thefossguy.com/apps/notes{uri}
+}
+
+
+
+contacts.thefossguy.com {
+	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
+	redir https://cloud.thefossguy.com/apps/contacts{uri}
+}
+
+people.thefossguy.com {
+	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
+	redir https://cloud.thefossguy.com/apps/contacts{uri}
+}
+
+
+
+photos.thefossguy.com {
+	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
+	redir https://cloud.thefossguy.com/apps/photos{uri}
+}
+
+images.thefossguy.com {
+	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
+	redir https://cloud.thefossguy.com/apps/photos{uri}
+}
+
+
+
+videos.thefossguy.com {
+	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
+	redir https://cloud.thefossguy.com/apps/videos{uri}
+}
+
+
+
 admin.thefossguy.com {
 	reverse_proxy https://10.0.0.19:9090 {
 		transport http {
@@ -66,6 +115,7 @@ cockpit.thefossguy.com {
 	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
 	redir https://admin.thefossguy.com{uri}
 }
+
 
 
 torr.thefossguy.com {
