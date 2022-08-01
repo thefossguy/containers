@@ -27,10 +27,10 @@ services:
         container_name: gitea-govinda
         restart: always
         ports:
-            - "127.0.0.1:8010:3000"
-            - "127.0.0.1:8011:22"
-#            - "8010:3000"
-#            - "8011:2222"
+#            - "127.0.0.1:8010:3000"
+#            - "127.0.0.1:8011:22"
+            - "8010:3000"
+            - "8011:22"
         volumes:
             - /trayimurti/containers/volumes/gitea/web:/data:Z
             - /trayimurti/containers/volumes/gitea/ssh:/data/git/.ssh:Z
@@ -38,8 +38,12 @@ services:
 #            - /trayimurti/containers/volumes/gitea/web/config:/etc/gitea:Z
             - /etc/localtime:/etc/localtime:ro
         environment:
+            - DEFAULT_BRANCH=master
+            - RUN_MODE=prod
             - SSH_PORT=22
             - SSH_LISTEN_PORT=22
+            - DISABLE_SSH=false
+            - START_SSH_SERVER=true
             - ROOT_URL=https://git.thefossguy.com
             - DOMAIN=git.thefossguy.com
             - SSH_DOMAIN=git.thefossguy.com
@@ -49,7 +53,6 @@ services:
             - GITEA__database__USER=gitea
             - GITEA__database__PASSWD=/run/secrets/gitea_database_user_password
             - GITEA__service__DISABLE_REGISTRATION=true
-            - DISABLE_SSH=false
             - TZ=Asia/Kolkata
         depends_on:
             - gitea-db
