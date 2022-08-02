@@ -18,6 +18,7 @@ services:
             - /trayimurti/containers/volumes/caddy/ssl:/etc/ssl:Z
         labels:
             - io.containers.autoupdate=registry
+            - pratham.container.category=proxy
         depends_on:
             - gitea-web
             - thefossguy-blog
@@ -41,6 +42,7 @@ services:
             - /etc/localtime:/etc/localtime:ro
         labels:
             - io.containers.autoupdate=registry
+            - pratham.container.category=git
         environment:
             - DEFAULT_BRANCH=master
             - RUN_MODE=prod
@@ -76,6 +78,7 @@ services:
             - TZ=Asia/Kolkata
         labels:
             - io.containers.autoupdate=registry
+            - pratham.container.category=git
         secrets:
             - gitea_database_user_password
 
@@ -90,6 +93,7 @@ services:
             - /trayimurti/containers/volumes/blog:/src:Z
         labels:
             - io.containers.autoupdate=registry
+            - pratham.container.category=blog
         environment:
             - TZ=Asia/Kolkata
 
@@ -103,6 +107,7 @@ services:
             - /trayimurti/containers/volumes/nextcloud/web:/var/www/html:z
         labels:
             - io.containers.autoupdate=registry
+            - pratham.container.category=cloud
         environment:
             - POSTGRES_PASSWORD=/run/secrets/nextcloud_database_user_password
             - POSTGRES_DB=nextcloud
@@ -125,6 +130,7 @@ services:
             - /trayimurti/containers/volumes/nextcloud/database:/var/lib/postgresql/data:Z
         labels:
             - io.containers.autoupdate=registry
+            - pratham.container.category=cloud
         environment:
             - POSTGRES_DB=nextcloud
             - POSTGRES_USER=nextcloud
@@ -142,6 +148,7 @@ services:
             - /trayimurti/containers/volumes/nextcloud/web:/var/www/html:z
         labels:
             - io.containers.autoupdate=registry
+            - pratham.container.category=cloud
         environment:
             - TZ=Asia/Kolkata
         depends_on:
@@ -159,6 +166,7 @@ services:
             - /trayimurti/containers/volumes/mach:/src:Z
         labels:
             - io.containers.autoupdate=registry
+            - pratham.container.category=mach
         environment:
             - TZ=Asia/Kolkata
 
