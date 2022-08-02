@@ -16,6 +16,8 @@ services:
             - /trayimurti/containers/volumes/caddy/caddy_data:/data:Z
             - /trayimurti/containers/volumes/caddy/caddy_config:/config:Z
             - /trayimurti/containers/volumes/caddy/ssl:/etc/ssl:Z
+        labels:
+            - io.containers.autoupdate=registry
         depends_on:
             - gitea-web
             - thefossguy-blog
@@ -37,6 +39,8 @@ services:
 #            - /trayimurti/containers/volumes/gitea/web/data:/var/lib/gitea:Z
 #            - /trayimurti/containers/volumes/gitea/web/config:/etc/gitea:Z
             - /etc/localtime:/etc/localtime:ro
+        labels:
+            - io.containers.autoupdate=registry
         environment:
             - DEFAULT_BRANCH=master
             - RUN_MODE=prod
@@ -70,6 +74,8 @@ services:
             - POSTGRES_PASSWORD=/run/secrets/gitea_database_user_password
             - POSTGRES_DB=gitea
             - TZ=Asia/Kolkata
+        labels:
+            - io.containers.autoupdate=registry
         secrets:
             - gitea_database_user_password
 
@@ -82,6 +88,8 @@ services:
             - "8020:1313"
         volumes:
             - /trayimurti/containers/volumes/blog:/src:Z
+        labels:
+            - io.containers.autoupdate=registry
         environment:
             - TZ=Asia/Kolkata
 
@@ -93,6 +101,8 @@ services:
             - "8030:80"
         volumes:
             - /trayimurti/containers/volumes/nextcloud/web:/var/www/html:z
+        labels:
+            - io.containers.autoupdate=registry
         environment:
             - POSTGRES_PASSWORD=/run/secrets/nextcloud_database_user_password
             - POSTGRES_DB=nextcloud
@@ -113,6 +123,8 @@ services:
         restart: always
         volumes:
             - /trayimurti/containers/volumes/nextcloud/database:/var/lib/postgresql/data:Z
+        labels:
+            - io.containers.autoupdate=registry
         environment:
             - POSTGRES_DB=nextcloud
             - POSTGRES_USER=nextcloud
@@ -128,6 +140,8 @@ services:
         entrypoint: /cron.sh
         volumes:
             - /trayimurti/containers/volumes/nextcloud/web:/var/www/html:z
+        labels:
+            - io.containers.autoupdate=registry
         environment:
             - TZ=Asia/Kolkata
         depends_on:
@@ -143,6 +157,8 @@ services:
             - "8040:1313"
         volumes:
             - /trayimurti/containers/volumes/mach:/src:Z
+        labels:
+            - io.containers.autoupdate=registry
         environment:
             - TZ=Asia/Kolkata
 
