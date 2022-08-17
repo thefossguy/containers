@@ -176,30 +176,27 @@ secrets:
     nextcloud_database_user_password:
         external: true
 
+networks:
+    network-caddy:
+    network-gitea:
+    network-blog:
+    network-nextcloud:
+    network-mach:
+    network-torrent:
 
-# sudo firewall-cmd --permanent --add-port=8080/tcp --add-port=8443/tcp --add-port=8010/tcp --add-port=8011/tcp --add-port=8020/tcp --add-port=8030/tcp --add-port=8040/tcp
-# sudo firewall-cmd --reload
-# sudo firewall-cmd --list-ports
-
-# sudo zfs create trayimurti/containers/volumes/caddy
-# sudo zfs create trayimurti/containers/volumes/gitea
-# sudo zfs create trayimurti/containers/volumes/blog
-# sudo zfs create trayimurti/containers/volumes/nextcloud
-# sudo zfs create trayimurti/containers/volumes/mach
-
-# sudo chown pratham:pratham -vR /trayimurti/containers/volumes
-
-# mkdir -vp /trayimurti/containers/volumes/caddy/{site,ssl/{private,certs},caddy_{data,config}}
-# mkdir -vp /trayimurti/containers/volumes/gitea/{database,web,ssh}
-# mkdir -vp /trayimurti/containers/volumes/nextcloud/{database,web}
-
-# cp -v Caddyfile /trayimurti/containers/volumes/caddy/
-# chmod 700 -v /trayimurti/containers/volumes/caddy/ssl/private
-# chmod 600 -v /trayimurti/containers/volumes/caddy/ssl/private/key.pem
-
-# git clone git@gitlab.com:shivohamx3/blog.git /trayimurti/containers/volumes/blog
-# git clone git@gitlab.com:shivohamx3/machines.git /trayimurti/containers/volumes/mach
-# mkdir -vp /trayimurti/containers/volumes/{mach,blog}/content
-
-# openssl rand -base64 20 | podman secret create gitea_database_user_password -
-# openssl rand -base64 20 | podman secret create nextcloud_database_user_password -
+# SERVICE_TEMPLATE
+#    service:
+#        image:
+#        container_name:
+#        command OR entrypoint:
+#        restart: always
+#        ports:
+#        volumes:
+#        labels:
+#            - io.containers.autoupdate=registry
+#            - pratham.container.category=
+#        environment:
+#            - TZ=Asia/Kolkata
+#        depends_on:
+#        secrets:
+#        networks:
