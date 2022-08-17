@@ -2,6 +2,7 @@ version: 3.7
 
 services:
 
+
     reverse-proxy:
         image: caddy:alpine
         container_name: caddy-vishwambhar
@@ -19,19 +20,22 @@ services:
         labels:
             - io.containers.autoupdate=registry
             - pratham.container.category=proxy
-        depends_on:
-            - gitea-web
-            - thefossguy-blog
-            - nextcloud-web
-            - thefossguy-mach
+        environment:
+            - TZ=Asia/Kolkata
+#        depends_on:
+#            - gitea-web
+#            - thefossguy-blog
+#            - nextcloud-web
+#            - thefossguy-mach
+        networks:
+            - network-caddy
+
 
     gitea-web:
         image: gitea/gitea:latest
         container_name: gitea-govinda
         restart: always
         ports:
-#            - "127.0.0.1:8010:3000"
-#            - "127.0.0.1:8011:22"
             - "8010:3000"
             - "8011:22"
         volumes:
@@ -42,14 +46,14 @@ services:
             - /etc/localtime:/etc/localtime:ro
         labels:
             - io.containers.autoupdate=registry
-            - pratham.container.category=git
+            - pratham.container.category=gitea
         environment:
             - DEFAULT_BRANCH=master
             - RUN_MODE=prod
-            - SSH_PORT=22
-            - SSH_LISTEN_PORT=22
             - DISABLE_SSH=false
             - START_SSH_SERVER=true
+            - SSH_PORT=22
+            - SSH_LISTEN_PORT=22
             - ROOT_URL=https://git.thefossguy.com
             - DOMAIN=git.thefossguy.com
             - SSH_DOMAIN=git.thefossguy.com
@@ -64,6 +68,9 @@ services:
             - gitea-db
         secrets:
             - gitea_database_user_password
+        networks:
+            - network-gitea
+
 
     gitea-db:
         image: postgres:alpine
@@ -73,7 +80,7 @@ services:
             - /trayimurti/containers/volumes/gitea/database:/var/lib/postgresql/data:Z
         labels:
             - io.containers.autoupdate=registry
-            - pratham.container.category=git
+            - pratham.container.category=gitea
         environment:
             - POSTGRES_USER=gitea
             - POSTGRES_PASSWORD=/run/secrets/gitea_database_user_password
@@ -81,6 +88,9 @@ services:
             - TZ=Asia/Kolkata
         secrets:
             - gitea_database_user_password
+        networks:
+            - network-gitea
+
 
     thefossguy-blog:
         image: klakegg/hugo:alpine
@@ -96,6 +106,9 @@ services:
             - pratham.container.category=blog
         environment:
             - TZ=Asia/Kolkata
+        networks:
+            - network-blog
+
 
     nextcloud-web:
         image: nextcloud:production
@@ -121,6 +134,9 @@ services:
             - nextcloud-db
         secrets:
             - nextcloud_database_user_password
+        networks:
+            - network-nextcloud
+
 
     nextcloud-db:
         image: postgres:alpine
@@ -138,6 +154,9 @@ services:
             - TZ=Asia/Kolkata
         secrets:
             - nextcloud_database_user_password
+        networks:
+            - network-nextcloud
+
 
     nextcloud-cron:
         image: nextcloud:production
@@ -154,6 +173,9 @@ services:
         depends_on:
             - nextcloud-web
             - nextcloud-db
+        networks:
+            - network-nextcloud
+
 
     thefossguy-mach:
         image: klakegg/hugo:alpine
@@ -169,6 +191,53 @@ services:
             - pratham.container.category=mach
         environment:
             - TZ=Asia/Kolkata
+        networks:
+            - network-mach
+
+    wireguard-client:
+        image: lscr.io/linuxserver/wireguard:latest
+        container_name: wireguard-rahu
+        restart: always
+        ports:
+            - "8050:51820/udp"
+        volumes:
+            - /trayimurti/containers/volumes/wireguard:/config:Z
+            - /lib/modules:/lib/modules:ro
+        labels:
+            - io.containers.autoupdate=registry
+            - pratham.container.category=torrent
+        cap_add:
+            - NET_ADMIN
+            - SYS_MODULE
+        environment:
+            - SERVERURL=auto    # determine and set external IP automatically
+            - SERVERPORT=51820
+            - TZ=Asia/Kolkata
+        sysctls:
+            - net.ipv4.conf.all.src_valid_mark=1
+        networks:
+            - network-torrent
+
+    transmission-web:
+        image: lscr.io/linuxserver/transmission:latest
+        container_name: transmission-ketu
+        restart: always
+        ports:
+            - "8060:9091"
+            - "8061:51413"
+            - "8062:51413/udp"
+        volumes:
+            - /trayimurti/torrents/:/downloads:Z
+            - /trayimurti/torrents/.config:/config:Z
+        labels:
+            - io.containers.autoupdate=registry
+            - pratham.container.category=torrent
+        environment:
+            - TZ=Asia/Kolkata
+        depends_on:
+            - wireguard-client
+        networks:
+             network-torrent
 
 secrets:
     gitea_database_user_password:
@@ -195,6 +264,8 @@ networks:
 #        labels:
 #            - io.containers.autoupdate=registry
 #            - pratham.container.category=
+#        cap_add:
+#        sysctls:
 #        environment:
 #            - TZ=Asia/Kolkata
 #        depends_on:
