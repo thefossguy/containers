@@ -71,22 +71,22 @@ services:
         restart: always
         volumes:
             - /trayimurti/containers/volumes/gitea/database:/var/lib/postgresql/data:Z
+        labels:
+            - io.containers.autoupdate=registry
+            - pratham.container.category=git
         environment:
             - POSTGRES_USER=gitea
             - POSTGRES_PASSWORD=/run/secrets/gitea_database_user_password
             - POSTGRES_DB=gitea
             - TZ=Asia/Kolkata
-        labels:
-            - io.containers.autoupdate=registry
-            - pratham.container.category=git
         secrets:
             - gitea_database_user_password
 
     thefossguy-blog:
         image: klakegg/hugo:alpine
         container_name: hugo-vaikunthnatham
-        restart: always
         command: server --disableFastRender -b https://blog.thefossguy.com/ --appendPort=false
+        restart: always
         ports:
             - "8020:1313"
         volumes:
@@ -142,8 +142,8 @@ services:
     nextcloud-cron:
         image: nextcloud:production
         container_name: nextcloud-karma
-        restart: always
         entrypoint: /cron.sh
+        restart: always
         volumes:
             - /trayimurti/containers/volumes/nextcloud/web:/var/www/html:z
         labels:
@@ -158,8 +158,8 @@ services:
     thefossguy-mach:
         image: klakegg/hugo:alpine
         container_name: hugo-mahayogi
-        restart: always
         command: server --disableFastRender -b https://mach.thefossguy.com/ --appendPort=false
+        restart: always
         ports:
             - "8040:1313"
         volumes:
