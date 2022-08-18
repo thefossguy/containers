@@ -22,13 +22,12 @@ services:
             - pratham.container.category=proxy
         environment:
             - TZ=Asia/Kolkata
-#        depends_on:
-#            - gitea-web
-#            - thefossguy-blog
-#            - nextcloud-web
-#            - thefossguy-mach
-        networks:
-            - network-caddy
+        depends_on:
+            - gitea-web
+            - thefossguy-blog
+            - nextcloud-web
+            - thefossguy-mach
+            - transmission-raadhe
 
 
     gitea-web:
@@ -68,8 +67,6 @@ services:
             - gitea-db
         secrets:
             - gitea_database_user_password
-        networks:
-            - network-gitea
 
 
     gitea-db:
@@ -88,8 +85,6 @@ services:
             - TZ=Asia/Kolkata
         secrets:
             - gitea_database_user_password
-        networks:
-            - network-gitea
 
 
     thefossguy-blog:
@@ -106,8 +101,6 @@ services:
             - pratham.container.category=blog
         environment:
             - TZ=Asia/Kolkata
-        networks:
-            - network-blog
 
 
     nextcloud-web:
@@ -134,8 +127,6 @@ services:
             - nextcloud-db
         secrets:
             - nextcloud_database_user_password
-        networks:
-            - network-nextcloud
 
 
     nextcloud-db:
@@ -154,8 +145,6 @@ services:
             - TZ=Asia/Kolkata
         secrets:
             - nextcloud_database_user_password
-        networks:
-            - network-nextcloud
 
 
     nextcloud-cron:
@@ -173,8 +162,6 @@ services:
         depends_on:
             - nextcloud-web
             - nextcloud-db
-        networks:
-            - network-nextcloud
 
 
     thefossguy-mach:
@@ -191,44 +178,44 @@ services:
             - pratham.container.category=mach
         environment:
             - TZ=Asia/Kolkata
-        networks:
-            - network-mach
+
 
     wireguard-client:
         image: lscr.io/linuxserver/wireguard:latest
-        container_name: wireguard-rahu
+        container_name: wireguard-shyaam
         restart: always
         ports:
-            - "8050:51820/udp"
+            - "8050:9091"           # transmission web-ui
+            - "8051:51413"          # transmission; idk what
+            - "8052:51413/udp"      # transmission; idk what
+            - "8053:51820/udp"      # wireguard
         volumes:
-            - /trayimurti/containers/volumes/wireguard:/config:Z
+            - /trayimurti/torrents/wg-conf:/config:Z
             - /lib/modules:/lib/modules:ro
         labels:
             - io.containers.autoupdate=registry
             - pratham.container.category=torrent
+        environment:
+#            - SERVERURL=auto    # determine and set external IP automatically
+#            - SERVERPORT=51820
+            - TZ=Asia/Kolkata
         cap_add:
             - NET_ADMIN
             - SYS_MODULE
-        environment:
-            - SERVERURL=auto    # determine and set external IP automatically
-            - SERVERPORT=51820
-            - TZ=Asia/Kolkata
         sysctls:
             - net.ipv4.conf.all.src_valid_mark=1
         networks:
-            - network-torrent
+            - network-torr
+            - container-compose_default
+
 
     transmission-web:
         image: lscr.io/linuxserver/transmission:latest
-        container_name: transmission-ketu
+        container_name: transmission-raadhe
         restart: always
-        ports:
-            - "8060:9091"
-            - "8061:51413"
-            - "8062:51413/udp"
         volumes:
-            - /trayimurti/torrents/:/downloads:Z
-            - /trayimurti/torrents/.config:/config:Z
+            - /trayimurti/torrents/downloads:/downloads:Z
+            - /trayimurti/torrents/config:/config:Z
         labels:
             - io.containers.autoupdate=registry
             - pratham.container.category=torrent
@@ -236,8 +223,11 @@ services:
             - TZ=Asia/Kolkata
         depends_on:
             - wireguard-client
+#        network_mode: 'service:wireguard-shyaam'
         networks:
-             network-torrent
+            - network-torr
+            - container-compose_default
+
 
 secrets:
     gitea_database_user_password:
@@ -245,18 +235,17 @@ secrets:
     nextcloud_database_user_password:
         external: true
 
+
 networks:
-    network-caddy:
-    network-gitea:
-    network-blog:
-    network-nextcloud:
-    network-mach:
-    network-torrent:
+    network-torr:
+    container-compose_default:
+        external:
+            true
 
 # SERVICE_TEMPLATE
 #    service:
-#        image:
-#        container_name:
+#        image: 
+#        container_name: 
 #        command OR entrypoint:
 #        restart: always
 #        ports:
@@ -264,10 +253,10 @@ networks:
 #        labels:
 #            - io.containers.autoupdate=registry
 #            - pratham.container.category=
-#        cap_add:
-#        sysctls:
 #        environment:
 #            - TZ=Asia/Kolkata
+#        sysctls:
+#        cap_add:
 #        depends_on:
 #        secrets:
 #        networks:
