@@ -204,12 +204,6 @@ secrets:
         external: true
 
 
-networks:
-    network-torr:
-    container-compose_default:
-        external:
-            true
-
 # SERVICE_TEMPLATE
 #    service:
 #        image: 
