@@ -179,40 +179,14 @@ services:
         environment:
             - TZ=Asia/Kolkata
 
-
-    wireguard-client:
-        image: lscr.io/linuxserver/wireguard:latest
-        container_name: wireguard-shyaam
-        restart: always
-        ports:
-            - "8050:9091"           # transmission web-ui
-            - "8051:51413"          # transmission; idk what
-            - "8052:51413/udp"      # transmission; idk what
-            - "8053:51820/udp"      # wireguard
-        volumes:
-            - /trayimurti/torrents/wg-conf:/config:Z
-            - /lib/modules:/lib/modules:ro
-        labels:
-            - io.containers.autoupdate=registry
-            - pratham.container.category=torrent
-        environment:
-#            - SERVERURL=auto    # determine and set external IP automatically
-#            - SERVERPORT=51820
-            - TZ=Asia/Kolkata
-        cap_add:
-            - NET_ADMIN
-            - SYS_MODULE
-        sysctls:
-            - net.ipv4.conf.all.src_valid_mark=1
-        networks:
-            - network-torr
-            - container-compose_default
-
-
     transmission-web:
         image: lscr.io/linuxserver/transmission:latest
         container_name: transmission-raadhe
         restart: always
+        ports:
+            - "8050:9091"           # transmission web-ui
+            - "8051:51413"          # torrent port TCP
+            - "8052:51413/udp"      # torrent port UDP
         volumes:
             - /trayimurti/torrents/downloads:/downloads:Z
             - /trayimurti/torrents/config:/config:Z
@@ -221,12 +195,6 @@ services:
             - pratham.container.category=torrent
         environment:
             - TZ=Asia/Kolkata
-        depends_on:
-            - wireguard-client
-#        network_mode: 'service:wireguard-shyaam'
-        networks:
-            - network-torr
-            - container-compose_default
 
 
 secrets:
