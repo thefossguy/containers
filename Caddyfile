@@ -20,11 +20,6 @@ git.thefossguy.com {
 	reverse_proxy gitea-govinda:3000
 }
 
-git.thefossguy.com:22 {
-	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
-	reverse_proxy gitea-govinda:22
-}
-
 src.thefossguy.com {
 	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
 	redir https://git.thefossguy.com{uri}
@@ -120,18 +115,10 @@ cockpit.thefossguy.com {
 
 torr.thefossguy.com {
 	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
-
-	basicauth {
-		pratham 
-	}
-	reverse_proxy 10.0.0.14:9091
+	reverse_proxy transmission-raadhe:9091
 }
 
 torrs.thefossguy.com {
 	tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
-
-	basicauth {
-		pratham 
-	}
 	redir https://torr.thefossguy.com{uri}
 }
