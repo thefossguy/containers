@@ -40,8 +40,6 @@ services:
         volumes:
             - /trayimurti/containers/volumes/gitea/web:/data:Z
             - /trayimurti/containers/volumes/gitea/ssh:/data/git/.ssh:Z
-#            - /trayimurti/containers/volumes/gitea/web/data:/var/lib/gitea:Z
-#            - /trayimurti/containers/volumes/gitea/web/config:/etc/gitea:Z
             - /etc/localtime:/etc/localtime:ro
         labels:
             - io.containers.autoupdate=registry
@@ -178,6 +176,7 @@ services:
             - pratham.container.category=mach
         environment:
             - TZ=Asia/Kolkata
+
 
     transmission-web:
         image: lscr.io/linuxserver/transmission:latest
