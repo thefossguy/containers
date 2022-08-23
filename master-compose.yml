@@ -163,7 +163,7 @@ services:
 
 
     thefossguy-mach:
-        image: klakegg/hugo:alpine
+        image: klakegg/hugo:ext-debian
         container_name: hugo-mahayogi
         command: server --disableFastRender -b https://mach.thefossguy.com/ --appendPort=false
         restart: always
