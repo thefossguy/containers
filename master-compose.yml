@@ -117,6 +117,7 @@ services:
             - POSTGRES_DB=nextcloud
             - POSTGRES_USER=nextcloud
             - POSTGRES_HOST=nextcloud-db
+            - NEXTCLOUD_HOSTNAME=cloud.thefossguy.com
             - NEXTCLOUD_TRUSTED_DOMAINS=cloud.thefossguy.com
             - OVERWRITECLIURL=https://cloud.thefossguy.com
             - OVERWRITEPROTOCOL=https
@@ -145,21 +146,21 @@ services:
             - nextcloud_database_user_password
 
 
-    nextcloud-cron:
-        image: nextcloud:production
-        container_name: nextcloud-karma
-        entrypoint: /cron.sh
-        restart: always
-        volumes:
-            - /trayimurti/containers/volumes/nextcloud/web:/var/www/html:z
-        labels:
-            - io.containers.autoupdate=registry
-            - pratham.container.category=cloud
-        environment:
-            - TZ=Asia/Kolkata
-        depends_on:
-            - nextcloud-web
-            - nextcloud-db
+#    nextcloud-cron:
+#        image: nextcloud:production
+#        container_name: nextcloud-karma
+#        entrypoint: /cron.sh
+#        restart: always
+#        volumes:
+#            - /trayimurti/containers/volumes/nextcloud/web:/var/www/html:z
+#        labels:
+#            - io.containers.autoupdate=registry
+#            - pratham.container.category=cloud
+#        environment:
+#            - TZ=Asia/Kolkata
+#        depends_on:
+#            - nextcloud-web
+#            - nextcloud-db
 
 
     thefossguy-mach:
