@@ -146,6 +146,9 @@ services:
             - nextcloud_database_user_password
 
 
+#    use the following in your crontab instead of deploying `nextcloud-karma`
+#    */5 * * * * podman exec -u www-data nextcloud-govinda /usr/local/bin/php -f /var/www/html/cron.php >/dev/null 2>&1
+#    ===========================================================================
 #    nextcloud-cron:
 #        image: nextcloud:production
 #        container_name: nextcloud-karma
