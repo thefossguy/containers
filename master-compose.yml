@@ -182,22 +182,22 @@ services:
             - TZ=Asia/Kolkata
 
 
-#    transmission-web:
-#        image: lscr.io/linuxserver/transmission:latest
-#        container_name: transmission-raadhe
-#        restart: always
-#        ports:
-#            - "8050:9091"           # transmission web-ui
-#            - "8051:51413"          # torrent port TCP
-#            - "8052:51413/udp"      # torrent port UDP
-#        volumes:
-#            - /trayimurti/torrents/downloads:/downloads:Z
-#            - /trayimurti/torrents/config:/config:Z
-#        labels:
-#            - io.containers.autoupdate=registry
-#            - pratham.container.category=torrent
-#        environment:
-#            - TZ=Asia/Kolkata
+    transmission-web:
+        image: lscr.io/linuxserver/transmission:latest
+        container_name: transmission-raadhe
+        restart: always
+        ports:
+            - "8050:9091"           # transmission web-ui
+            - "8051:51413"          # torrent port TCP
+            - "8052:51413/udp"      # torrent port UDP
+        volumes:
+            - /trayimurti/torrents/downloads:/downloads:Z
+            - /trayimurti/torrents/config:/config:Z
+        labels:
+            - io.containers.autoupdate=registry
+            - pratham.container.category=torrent
+        environment:
+            - TZ=Asia/Kolkata
 
 
 secrets:
