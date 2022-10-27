@@ -112,12 +112,14 @@ services:
         labels:
             - io.containers.autoupdate=registry
             - pratham.container.category=cloud
+# https://stackoverflow.com/questions/29924843/how-do-i-set-hostname-in-docker-compose/63291253#63291253
+        hostname: cloud.thefossguy.com
         environment:
             - POSTGRES_PASSWORD=/run/secrets/nextcloud_database_user_password
             - POSTGRES_DB=nextcloud
             - POSTGRES_USER=nextcloud
             - POSTGRES_HOST=nextcloud-db
-            - NEXTCLOUD_HOSTNAME=cloud.thefossguy.com
+#            - NEXTCLOUD_HOSTNAME=cloud.thefossguy.com
             - NEXTCLOUD_TRUSTED_DOMAINS=cloud.thefossguy.com
             - OVERWRITECLIURL=https://cloud.thefossguy.com
             - OVERWRITEPROTOCOL=https
