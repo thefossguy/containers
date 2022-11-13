@@ -4,7 +4,7 @@ services:
 
 
     reverse-proxy:
-        image: caddy:alpine
+        image: docker.io/library/caddy:alpine
         container_name: caddy-vishwambhar
         command: caddy run --config /etc/caddy/Caddyfile
         restart: always
@@ -31,7 +31,7 @@ services:
 
 
     gitea-web:
-        image: gitea/gitea:latest
+        image: docker.io/gitea/gitea:latest
         container_name: gitea-govinda
         restart: always
         ports:
@@ -68,7 +68,7 @@ services:
 
 
     gitea-db:
-        image: postgres:14-alpine
+        image: docker.io/library/postgres:14-alpine
         container_name: gitea-chitragupta
         restart: always
         volumes:
@@ -86,7 +86,7 @@ services:
 
 
     thefossguy-blog:
-        image: klakegg/hugo:alpine
+        image: docker.io/klakegg/hugo:alpine
         container_name: hugo-vaikunthnatham
         command: server --disableFastRender -b https://blog.thefossguy.com/ --appendPort=false
         restart: always
@@ -102,7 +102,7 @@ services:
 
 
     nextcloud-web:
-        image: nextcloud:production
+        image: docker.io/library/nextcloud:production
         container_name: nextcloud-govinda
         restart: always
         ports:
@@ -131,7 +131,7 @@ services:
 
 
     nextcloud-db:
-        image: postgres:14-alpine
+        image: docker.io/library/postgres:14-alpine
         container_name: nextcloud-chitragupta
         restart: always
         volumes:
@@ -169,7 +169,7 @@ services:
 
 
     thefossguy-mach:
-        image: klakegg/hugo:ext-debian
+        image: docker.io/klakegg/hugo:ext-debian
         container_name: hugo-mahayogi
         command: server --disableFastRender -b https://mach.thefossguy.com/ --appendPort=false
         restart: always
