@@ -121,6 +121,7 @@ services:
             - POSTGRES_HOST=nextcloud-db
 #            - NEXTCLOUD_HOSTNAME=cloud.thefossguy.com
             - NEXTCLOUD_TRUSTED_DOMAINS=cloud.thefossguy.com
+            - APACHE_DISABLE_REWRITE_IP=1
             - OVERWRITECLIURL=https://cloud.thefossguy.com
             - OVERWRITEPROTOCOL=https
             - TZ=Asia/Kolkata
