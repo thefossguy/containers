@@ -118,6 +118,12 @@ cockpit.thefossguy.com {
 }
 
 
+notify.thefossguy.com {
+    tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
+    reverse_proxy gotify-akashvani:80
+}
+
+
 torr.thefossguy.com {
     tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
     basicauth {
