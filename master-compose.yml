@@ -108,7 +108,7 @@ services:
         ports:
             - "8030:80"
         volumes:
-            - /trayimurti/containers/volumes/nextcloud/web:/var/www/html:z
+            - /trayimurti/containers/volumes/nextcloud/web:/var/www/html:Z
         labels:
             - io.containers.autoupdate=registry
             - pratham.container.category=cloud
