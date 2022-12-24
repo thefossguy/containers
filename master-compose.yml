@@ -25,11 +25,13 @@ services:
         depends_on:
             - gitea-web
             - thefossguy-blog
-            - nextcloud-web
             - thefossguy-mach
+            - nextcloud-web
             - gotify-server
+            - uptimekuma-server
             - transmission-raadhe
 
+################################################################################
 
     gitea-web:
         image: docker.io/gitea/gitea:latest
@@ -85,6 +87,7 @@ services:
         secrets:
             - gitea_database_user_password
 
+################################################################################
 
     thefossguy-blog:
         image: docker.io/klakegg/hugo:alpine
@@ -102,12 +105,29 @@ services:
             - TZ=Asia/Kolkata
 
 
+    thefossguy-mach:
+        image: docker.io/klakegg/hugo:ext-debian
+        container_name: hugo-mahayogi
+        command: server --disableFastRender -b https://mach.thefossguy.com/ --appendPort=false
+        restart: always
+        ports:
+            - "8030:1313"
+        volumes:
+            - /trayimurti/containers/volumes/mach:/src:Z
+        labels:
+            - io.containers.autoupdate=registry
+            - pratham.container.category=mach
+        environment:
+            - TZ=Asia/Kolkata
+
+################################################################################
+
     nextcloud-web:
         image: docker.io/library/nextcloud:production
         container_name: nextcloud-govinda
         restart: always
         ports:
-            - "8030:80"
+            - "8040:80"
         volumes:
             - /trayimurti/containers/volumes/nextcloud/web:/var/www/html:Z
         labels:
@@ -169,22 +189,7 @@ services:
 #            - nextcloud-web
 #            - nextcloud-db
 
-
-    thefossguy-mach:
-        image: docker.io/klakegg/hugo:ext-debian
-        container_name: hugo-mahayogi
-        command: server --disableFastRender -b https://mach.thefossguy.com/ --appendPort=false
-        restart: always
-        ports:
-            - "8040:1313"
-        volumes:
-            - /trayimurti/containers/volumes/mach:/src:Z
-        labels:
-            - io.containers.autoupdate=registry
-            - pratham.container.category=mach
-        environment:
-            - TZ=Asia/Kolkata
-
+################################################################################
 
     gotify-server:
         image: docker.io/gotify/server-arm64:latest
@@ -201,14 +206,30 @@ services:
             - TZ=Asia/Kolkata
 
 
+    uptimekuma-server:
+        image: docker.io/louislam/uptime-kuma:debian
+        container_name: uptime-vishnu
+        restart: always
+        ports:
+            - "8060:3001"
+        volumes:
+            - /trayimurti/containers/volumes/uptimekuma:/app/data:Z
+        labels:
+            - io.containers.autoupdate=registry
+            - pratham.container.category=uptime
+        environment:
+            - TZ=Asia/Kolkata
+
+################################################################################
+
     transmission-web:
         image: lscr.io/linuxserver/transmission:latest
         container_name: transmission-raadhe
         restart: always
         ports:
-            - "8060:9091"           # transmission web-ui
-            - "8061:51413"          # torrent port TCP
-            - "8062:51413/udp"      # torrent port UDP
+            - "8070:9091"           # transmission web-ui
+            - "8071:51413"          # torrent port TCP
+            - "8072:51413/udp"      # torrent port UDP
         volumes:
             - /trayimurti/torrents/downloads:/downloads:Z
             - /trayimurti/torrents/config:/config:Z
