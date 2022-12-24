@@ -29,7 +29,7 @@ services:
             - nextcloud-web
             - gotify-server
             - uptimekuma-server
-            - transmission-raadhe
+            - transmission-web
 
 ################################################################################
 
