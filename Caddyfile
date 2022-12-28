@@ -120,13 +120,15 @@ cockpit.thefossguy.com {
 
 torr.thefossguy.com {
     tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
-    basicauth {
-
-    }
-    reverse_proxy 10.0.0.14:9091
+    reverse_proxy transmission-raadhe:9091
 }
 
 uptime.thefossguy.com {
     tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
     reverse_proxy uptime-vishnu:3001
+}
+
+notify.thefossguy.com {
+    tls /etc/ssl/certs/certificate.pem /etc/ssl/private/key.pem
+    reverse_proxy gotify-akashvani:80
 }
