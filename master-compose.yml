@@ -200,6 +200,12 @@ services:
             - pratham.container.category=uptime
         environment:
             - TZ=Asia/Kolkata
+        depends_on:
+            - gitea-web
+            - thefossguy-blog
+            - thefossguy-mach
+            - nextcloud-web
+            - gotify-server
 
 ################################################################################
 
