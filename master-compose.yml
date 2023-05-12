@@ -13,11 +13,11 @@ services:
             - "8080:80"
             - "8443:443"
         volumes:
-            - /trayimurti/containers/volumes/caddy/Caddyfile:/etc/caddy/Caddyfile:Z
-            - /trayimurti/containers/volumes/caddy/site:/srv:Z
-            - /trayimurti/containers/volumes/caddy/caddy_data:/data:Z
-            - /trayimurti/containers/volumes/caddy/caddy_config:/config:Z
-            - /trayimurti/containers/volumes/caddy/ssl:/etc/ssl:Z
+            - ${CONTAINER_VOLUME_PATH}/caddy/Caddyfile:/etc/caddy/Caddyfile:Z
+            - ${CONTAINER_VOLUME_PATH}/caddy/site:/srv:Z
+            - ${CONTAINER_VOLUME_PATH}/caddy/caddy_data:/data:Z
+            - ${CONTAINER_VOLUME_PATH}/caddy/caddy_config:/config:Z
+            - ${CONTAINER_VOLUME_PATH}/caddy/ssl:/etc/ssl:Z
         labels:
             - io.containers.autoupdate=registry
             - pratham.container.category=proxy
@@ -43,8 +43,8 @@ services:
             - "8010:3000"
             - "8011:22"
         volumes:
-            - /trayimurti/containers/volumes/gitea/web:/data:Z
-            - /trayimurti/containers/volumes/gitea/ssh:/data/git/.ssh:Z
+            - ${CONTAINER_VOLUME_PATH}/gitea/web:/data:Z
+            - ${CONTAINER_VOLUME_PATH}/gitea/ssh:/data/git/.ssh:Z
             - /etc/localtime:/etc/localtime:ro
         labels:
             - io.containers.autoupdate=registry
@@ -78,7 +78,7 @@ services:
         container_name: gitea-chitragupta
         restart: always
         volumes:
-            - /trayimurti/containers/volumes/gitea/database:/var/lib/postgresql/data:Z
+            - ${CONTAINER_VOLUME_PATH}/gitea/database:/var/lib/postgresql/data:Z
         labels:
             - io.containers.autoupdate=registry
             - pratham.container.category=gitea
@@ -101,7 +101,7 @@ services:
         ports:
             - "8020:1313"
         volumes:
-            - /trayimurti/containers/volumes/blog:/src:Z
+            - ${CONTAINER_VOLUME_PATH}/blog:/src:Z
         labels:
             - io.containers.autoupdate=registry
             - pratham.container.category=blog
@@ -118,7 +118,7 @@ services:
         ports:
             - "8030:1313"
         volumes:
-            - /trayimurti/containers/volumes/mach:/src:Z
+            - ${CONTAINER_VOLUME_PATH}/mach:/src:Z
         labels:
             - io.containers.autoupdate=registry
             - pratham.container.category=mach
@@ -135,7 +135,7 @@ services:
         ports:
             - "8040:80"
         volumes:
-            - /trayimurti/containers/volumes/nextcloud/web:/var/www/html:Z
+            - ${CONTAINER_VOLUME_PATH}/nextcloud/web:/var/www/html:Z
         labels:
             - io.containers.autoupdate=registry
             - pratham.container.category=cloud
@@ -164,7 +164,7 @@ services:
         container_name: nextcloud-chitragupta
         restart: always
         volumes:
-            - /trayimurti/containers/volumes/nextcloud/database:/var/lib/postgresql/data:Z
+            - ${CONTAINER_VOLUME_PATH}/nextcloud/database:/var/lib/postgresql/data:Z
         labels:
             - io.containers.autoupdate=registry
             - pratham.container.category=cloud
@@ -187,7 +187,7 @@ services:
         ports:
             - "8050:80"
         volumes:
-            - /trayimurti/containers/volumes/gotify:/app/data:Z
+            - ${CONTAINER_VOLUME_PATH}/gotify:/app/data:Z
         labels:
             - io.containers.autoupdate=registry
             - pratham.container.category=gotify
@@ -203,7 +203,7 @@ services:
         ports:
             - "8060:3001"
         volumes:
-            - /trayimurti/containers/volumes/uptimekuma:/app/data:Z
+            - ${CONTAINER_VOLUME_PATH}/uptimekuma:/app/data:Z
         labels:
             - io.containers.autoupdate=registry
             - pratham.container.category=uptime
