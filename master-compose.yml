@@ -179,22 +179,6 @@ services:
 
 ################################################################################
 
-    gotify-server:
-        image: docker.io/gotify/server-arm64:latest
-        pull_policy: always
-        container_name: gotify-akashvani
-        restart: always
-        ports:
-            - "8050:80"
-        volumes:
-            - ${CONTAINER_VOLUME_PATH}/gotify:/app/data:Z
-        labels:
-            - io.containers.autoupdate=registry
-            - pratham.container.category=gotify
-        environment:
-            - TZ=Asia/Kolkata
-
-
     uptimekuma-server:
         image: docker.io/louislam/uptime-kuma:debian
         pull_policy: always
