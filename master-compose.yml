@@ -10,8 +10,8 @@ services:
         command: caddy run --config /etc/caddy/Caddyfile
         restart: always
         ports:
-            - "8080:80"
-            - "8443:443"
+            - "8001:80"
+            - "8002:443"
         volumes:
             - ${CONTAINER_VOLUME_PATH}/caddy/Caddyfile:/etc/caddy/Caddyfile:Z
             - ${CONTAINER_VOLUME_PATH}/caddy/site:/srv:Z
@@ -40,8 +40,8 @@ services:
         container_name: gitea-govinda
         restart: always
         ports:
-            - "8010:3000"
-            - "8011:22"
+            - "8003:3000"
+            - "8004:22"
         volumes:
             - ${CONTAINER_VOLUME_PATH}/gitea/web:/data:Z
             - ${CONTAINER_VOLUME_PATH}/gitea/ssh:/data/git/.ssh:Z
@@ -99,7 +99,7 @@ services:
         command: server --disableFastRender -b https://blog.thefossguy.com/ --appendPort=false
         restart: always
         ports:
-            - "8020:1313"
+            - "8005:1313"
         volumes:
             - ${CONTAINER_VOLUME_PATH}/blog:/src:Z
         labels:
@@ -116,7 +116,7 @@ services:
         command: server --disableFastRender -b https://mach.thefossguy.com/ --appendPort=false
         restart: always
         ports:
-            - "8030:1313"
+            - "8006:1313"
         volumes:
             - ${CONTAINER_VOLUME_PATH}/mach:/src:Z
         labels:
@@ -133,7 +133,7 @@ services:
         container_name: nextcloud-govinda
         restart: always
         ports:
-            - "8040:80"
+            - "8007:80"
         volumes:
             - ${CONTAINER_VOLUME_PATH}/nextcloud/web:/var/www/html:Z
         labels:
@@ -185,7 +185,7 @@ services:
         container_name: uptime-vishnu
         restart: always
         ports:
-            - "8060:3001"
+            - "8008:3001"
         volumes:
             - ${CONTAINER_VOLUME_PATH}/uptimekuma:/app/data:Z
         labels:
@@ -208,9 +208,9 @@ services:
         container_name: transmission-raadhe
         restart: always
         ports:
-            - "8070:9091"           # transmission web-ui
-            - "8071:51413"          # torrent port TCP
-            - "8072:51413/udp"      # torrent port UDP
+            - "8009:9091"           # transmission web-ui
+            - "8010:51413"          # torrent port TCP
+            - "8011:51413/udp"      # torrent port UDP
         volumes:
             - /trayimurti/torrents/downloads:/downloads:Z
             - /trayimurti/torrents/config:/config:Z
