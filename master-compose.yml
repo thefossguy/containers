@@ -5,6 +5,7 @@ services:
 
     reverse-proxy:
         image: docker.io/library/caddy:alpine
+        pull_policy: always
         container_name: caddy-vishwambhar
         command: caddy run --config /etc/caddy/Caddyfile
         restart: always
@@ -35,6 +36,7 @@ services:
 
     gitea-web:
         image: docker.io/gitea/gitea:latest
+        pull_policy: always
         container_name: gitea-govinda
         restart: always
         ports:
@@ -72,6 +74,7 @@ services:
 
     gitea-db:
         image: docker.io/library/postgres:15-alpine
+        pull_policy: always
         container_name: gitea-chitragupta
         restart: always
         volumes:
@@ -91,6 +94,7 @@ services:
 
     thefossguy-blog:
         image: docker.io/klakegg/hugo:alpine
+        pull_policy: always
         container_name: hugo-vaikunthnatham
         command: server --disableFastRender -b https://blog.thefossguy.com/ --appendPort=false
         restart: always
@@ -107,6 +111,7 @@ services:
 
     thefossguy-mach:
         image: docker.io/klakegg/hugo:ext-debian
+        pull_policy: always
         container_name: hugo-mahayogi
         command: server --disableFastRender -b https://mach.thefossguy.com/ --appendPort=false
         restart: always
@@ -124,6 +129,7 @@ services:
 
     nextcloud-web:
         image: docker.io/library/nextcloud:production
+        pull_policy: always
         container_name: nextcloud-govinda
         restart: always
         ports:
@@ -154,6 +160,7 @@ services:
 
     nextcloud-db:
         image: docker.io/library/postgres:15-alpine
+        pull_policy: always
         container_name: nextcloud-chitragupta
         restart: always
         volumes:
@@ -174,6 +181,7 @@ services:
 
     gotify-server:
         image: docker.io/gotify/server-arm64:latest
+        pull_policy: always
         container_name: gotify-akashvani
         restart: always
         ports:
@@ -189,6 +197,7 @@ services:
 
     uptimekuma-server:
         image: docker.io/louislam/uptime-kuma:debian
+        pull_policy: always
         container_name: uptime-vishnu
         restart: always
         ports:
@@ -211,6 +220,7 @@ services:
 
     transmission-web:
         image: lscr.io/linuxserver/transmission:latest
+        pull_policy: always
         container_name: transmission-raadhe
         restart: always
         ports:
@@ -237,6 +247,7 @@ secrets:
 # SERVICE_TEMPLATE
 #    service:
 #        image: 
+#        pull_policy: always
 #        container_name: 
 #        command OR entrypoint:
 #        restart: always
